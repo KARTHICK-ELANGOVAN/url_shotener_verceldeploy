@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "builds": [
+    { "src": "api/**/*.js", "use": "@vercel/node" }
+  ],
+  "routes": [
+    { "src": "/health", "dest": "/api/health" },
+    { "src": "/api/links/?$", "dest": "/api/links/index.js" },
+    { "src": "/api/links/(.*)", "dest": "/api/links/[code].js?code=$1" },
+    { "src": "/([0-9A-Za-z_-]{3,64})$", "dest": "/api/[code].js?code=$1" },
+    { "src": "/(.*)", "dest": "/$1" }
+  ]
+}
