@@ -15,30 +15,12 @@ if (!usePg) {
 // --- Postgres-backed implementation ---
 
 
-// Always use Postgres in production (Vercel)
-const usePg = true
-
-const connectionString =
-  process.env.DATABASE_URL || process.env.NEON_DATABASE_URL
-
-if (!connectionString) {
-  console.warn("❌ DATABASE_URL / NEON_DATABASE_URL is not set")
+let pool;
+if (usePg) {
+  const globalAny = global;
+  globalAny.__pgPool = globalAny.__pgPool || new Pool({ connectionString, max: 10, ssl: { rejectUnauthorized: false } });
+  pool = globalAny.__pgPool;
 }
-
-// Reuse pool for serverless environment (Vercel friendly)
-const globalAny = global
-
-if (!globalAny.__pgPool) {
-  globalAny.__pgPool = new Pool({
-    connectionString,
-    max: 10,
-    ssl: {
-      rejectUnauthorized: false   // REQUIRED for Neon
-    }
-  })
-}
-
-const pool = globalAny.__pgPool
 
 module.exports = pool
 
