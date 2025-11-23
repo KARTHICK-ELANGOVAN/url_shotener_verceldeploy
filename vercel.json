@@ -8,7 +8,7 @@
     { "src": "/api/links/?$", "dest": "/api/links/index.js" },
     { "src": "/api/links/(.*)", "dest": "/api/links/[code].js?code=$1" },
     { "src": "/([0-9A-Za-z_-]{3,64})$", "dest": "/api/[code].js?code=$1" },
-    { "src": "^/$", "dest": "/index.html" },
-    { "src": "/(.*)", "dest": "/index.html" }
+    { "src": "^/$", "dest": "public/index.html" },
+    { "src": "/(.*)", "dest": "public/index.html" }
   ]
 }
